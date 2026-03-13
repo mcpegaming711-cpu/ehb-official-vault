@@ -2,91 +2,101 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EHB | Imposter Result v12.0 (Dynamic)</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EHB | Recruitment Live Editor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Hind+Siliguri:wght@300;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --accent: #00ffcc; --bg: #05070a; --card: #12151c; --font-bn: 'Hind Siliguri', sans-serif; --font-en: 'Orbitron', sans-serif; }
-        body { margin: 0; background: var(--bg); color: #fff; font-family: var(--font-bn); padding: 20px; }
-        
-        /* 🛠️ Admin Panel Control UI */
-        .admin-box { background: var(--card); border: 1px solid #333; padding: 25px; border-radius: 20px; max-width: 480px; margin: 0 auto 30px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: var(--accent); border-radius: 10px; box-sizing: border-box; outline: none; }
-        .gen-btn { width: 100%; padding: 16px; background: var(--accent); color: #000; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 15px; text-transform: uppercase; }
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-        /* 📸 Dynamic Mobile Frame (Based on 56351.png & RealMe C71) */
-        #capture-frame { width: 360px; background: #fff; color: #000; margin: 0 auto; text-align: left; font-family: sans-serif; position: relative; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; }
+    <style>
+        :root { --accent: #00ffcc; --bg: #05070a; --card: #12151c; --text: #d1d5db; --font-bn: 'Hind Siliguri', sans-serif; --font-en: 'Orbitron', sans-serif; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-bn); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        /* 🔋 Dynamic Battery Status Bar */
-        .status-bar { height: 24px; background: #eee; color: #666; display: flex; align-items: center; justify-content: space-between; padding: 0 10px; font-size: 10px; font-weight: bold; font-family: var(--font-en); }
+        /* 🛠️ Admin Panel (Based on image_25.png) */
+        .admin-panel { background: var(--card); border: 2px solid #2d333b; border-radius: 20px; width: 100%; max-width: 480px; padding: 25px; box-sizing: border-box; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .admin-panel h3 { font-family: var(--font-en); color: var(--accent); margin-top: 0; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { display: block; font-size: 12px; margin-bottom: 5px; color: var(--accent); font-weight: 700; }
+        .input-group input { width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: var(--accent); border-radius: 10px; box-sizing: border-box; outline: none; border-left: 3px solid transparent; }
+        .input-group input:focus { border-left-color: var(--accent); }
+        
+        /* 💾 SAVE PROOF IMAGE Button */
+        .save-btn { width: 100%; padding: 16px; background: var(--accent); color: #000; border: none; border-radius: 12px; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 5px 15px rgba(0,255,204,0.2); transition: 0.3s; }
+        .save-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,255,204,0.3); }
+
+        /* 📸 Live Edit Panel (Mobile Screen Simulation) */
+        #phone-screen { width: 360px; background: #fff; color: #000; margin: 0 auto; text-align: left; font-family: system-ui, -apple-system, sans-serif; position: relative; border: 10px solid #1a1a1a; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
+        
+        /* 🔋 Status Bar */
+        .status-bar { height: 24px; background: #eee; color: #666; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; font-size: 10px; font-weight: bold; }
         .status-bar .icons { display: flex; align-items: center; gap: 5px; }
 
-        /* 🖼️ Facebook Success Frame (56351.png) */
-        .mail-content { padding: 25px; }
-        .mail-header { border-bottom: 1px solid #e5e5e5; padding-bottom: 15px; margin-bottom: 20px; position: relative; }
-        .mail-header h2 { font-size: 19px; margin: 0; color: #1c1e21; font-weight: 800; }
+        /* 🖼️ Email Content Area (56351.png) */
+        .email-container { padding: 25px; }
+        .email-header { border-bottom: 1px solid #e5e5e5; padding-bottom: 15px; margin-bottom: 20px; }
+        .email-header h2 { font-size: 19px; margin: 0; color: #1c1e21; font-weight: 800; }
         .mail-meta { font-size: 11px; color: #606770; margin-top: 8px; line-height: 1.4; }
         
-        /* Editable Timestamp */
-        .timestamp { position: absolute; right: 0; bottom: 15px; text-align: right; }
-        .timestamp h3 { font-size: 15px; margin: 0; color: #000; }
-        .timestamp span { font-size: 10px; color: #606770; }
+        .email-body { font-size: 14px; line-height: 1.5; color: #1c1e21; }
+        .email-body p { margin-bottom: 15px; }
+        .email-body b { color: #000; font-weight: 700; }
+        
+        /* 🖊️ ContentEditable Styling */
+        [contenteditable="true"] { border-radius: 4px; padding: 2px 4px; border: 1px solid transparent; transition: 0.2s; }
+        [contenteditable="true"]:hover { background: rgba(0,255,204,0.05); border-color: #ddd; }
+        [contenteditable="true"]:focus { background: rgba(0,255,204,0.1); border-color: var(--accent); outline: none; }
 
-        .mail-body { font-size: 14px; line-height: 1.5; color: #1c1e21; }
-        .mail-body p { margin-bottom: 15px; }
-        .mail-body b { color: #000; font-weight: 700; }
-
+        /* CEO master lock from user summary */
         #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
     <div id="lock-screen">
-        <div class="admin-box">
-            <h3 style="color:var(--accent); text-transform:uppercase;">EHB DYNAMIC SYSTEM</h3>
+        <div class="admin-panel">
+            <h3>CEO ACCESS ONLY</h3>
             <input type="password" id="ceo-pass" placeholder="পাসওয়ার্ড দিন">
-            <button class="gen-btn" onclick="verify()">OPEN VAULT</button>
+            <button class="save-btn" onclick="unlock()"><i class="fas fa-key"></i> UNLOCK SYSTEM</button>
         </div>
     </div>
 
-    <div id="vault-system" style="display:none;">
-        <div class="admin-box">
-            <h3>SCREENSHOT CONFIG</h3>
-            <input type="text" id="target-mail" placeholder="Recipient Email (recipient@haren.uk)" oninput="updateUI()">
-            <input type="text" id="target-name" placeholder="Target Name (User)" oninput="updateUI()">
-            <input type="text" id="target-time" placeholder="Time (07:21)" oninput="updateUI()">
-            <input type="text" id="target-ago" placeholder="X Second Ago (3 Second Ago)" oninput="updateUI()">
-            <button class="gen-btn" onclick="capture()"><i class="fas fa-camera"></i> CAPTURE & SAVE</button>
+    <div id="main-editor" style="display:none;">
+        
+        <div class="admin-panel">
+            <h3>LIVE EDITOR CONFIG</h3>
+            <div class="input-group">
+                <label>টার্গেট প্রোফাইল নাম (Hi User)</label>
+                <input type="text" id="target-name" placeholder="Ex: Rifat Chowdhury" oninput="syncName()">
+            </div>
+            <button class="save-btn" onclick="saveScreenshot()"><i class="fas fa-camera"></i> SAVE PROOF IMAGE</button>
         </div>
 
-        <div id="capture-frame">
+        <div id="phone-screen">
             
             <div class="status-bar">
-                <span><i class="fas fa-signal"></i> LTE</span>
+                <span>07:21</span>
                 <div class="icons">
-                    <span><i class="fas fa-network-wired"></i> <i class="fas fa-volume-mute"></i></span>
-                    <span id="ui-battery">57% <i class="fas fa-battery-half"></i></span> </div>
+                    <span><i class="fas fa-signal"></i> LTE</span>
+                    <span><i class="fas fa-wifi"></i></span>
+                    <span>28% <i class="fas fa-battery-quarter"></i></span> </div>
             </div>
 
-            <div class="mail-content">
-                <div class="mail-header">
+            <div class="email-container">
+                <div class="email-header">
                     <h2>Thank you for submitting your ID</h2>
                     <div class="mail-meta">
-                        To: <span id="ui-mail" contenteditable="true">recipient@haren.uk</span><br>
+                        To: nastikghawk63@haren.uk<br>
                         From: Facebook &lt;noreply@support.facebook.com&gt;
-                    </div>
-                    <div class="timestamp">
-                        <h3 id="ui-time" contenteditable="true">07:21</h3>
-                        <span id="ui-ago" contenteditable="true">(3 Second Ago)</span>
                     </div>
                 </div>
                 
-                <div class="mail-body">
-                    <p>Hi <b id="ui-name" contenteditable="true">User</b>,</p>
-                    <p>Thanks for letting us know about the profile you reported for pretending to be someone they're not.</p>
-                    <p><b>We removed the profile</b> since it goes against the Facebook Community Standards. We let them know that the profile has been removed, but not that you reported it.</p>
+                <div class="email-body">
+                    <p>Hi <b id="hi-name" contenteditable="true">User</b>,</p>
+                    <p contenteditable="true">Thanks for letting us know about the profile you reported for pretending to be someone they're not.</p>
+                    <p><b>We removed the profile</b> <span contenteditable="true">since it goes against the Facebook Community Standards.</span></p>
+                    <p contenteditable="true">For more information about our policies, please read the Facebook Community Standards: <br>
+                    <a href="https://www.facebook.com/communitystandards?ref=cr" style="color: #1877f2; text-decoration: none;">https://www.facebook.com/communitystandards?ref=cr</a></p>
                     <p><b>Thanks,<br>The Facebook Team</b></p>
                 </div>
             </div>
@@ -94,49 +104,27 @@
     </div>
 
     <script>
-        // master password from user summary
-        function verify() {
+        // CEO password function from user summary
+        function unlock() {
             if(document.getElementById('ceo-pass').value === "asif2008") {
                 document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('vault-system').style.display = 'block';
-                updateBattery(); // Initialize dynamic battery
-            } else { alert("WRONG PASSWORD!"); }
+                document.getElementById('main-editor').style.display = 'block';
+            } else { alert("ACCESS DENIED!"); }
         }
 
-        // 🔋 Dynamic Battery Sync (RealMe C71 Style)
-        function updateBattery() {
-            navigator.getBattery().then(function(battery) {
-                function updateUI() {
-                    let level = Math.round(battery.level * 100);
-                    let icon = level > 80 ? "fa-battery-full" : (level > 40 ? "fa-battery-half" : "fa-battery-quarter");
-                    
-                    document.getElementById('ui-battery').innerHTML = level + "% <i class='fas " + icon + "'></i>";
-                    
-                    if (battery.charging) {
-                        document.getElementById('ui-battery').innerHTML += " <i class='fas fa-bolt'></i>";
-                    }
-                }
-                
-                updateUI();
-                battery.addEventListener('levelchange', updateUI);
-                battery.addEventListener('chargingchange', updateUI);
-            });
+        // Live sync name input to email body
+        function syncName() {
+            let inputName = document.getElementById('target-name').value;
+            document.getElementById('hi-name').innerText = inputName || "User";
         }
 
-        function updateUI() {
-            // Live sync from admin panel inputs
-            document.getElementById('ui-mail').innerText = document.getElementById('target-mail').value || "recipient@mail.com";
-            document.getElementById('ui-name').innerText = document.getElementById('target-name').value || "User";
-            document.getElementById('ui-time').innerText = document.getElementById('target-time').value || "07:21";
-            document.getElementById('ui-ago').innerText = "(" + (document.getElementById('target-ago').value || "3 Second Ago") + ")";
-        }
-
-        function capture() {
-            const frame = document.getElementById('capture-frame');
-            html2canvas(frame, { scale: 3, useCORS: true }).then(canvas => {
+        // Save screenshot function
+        function saveScreenshot() {
+            const screen = document.getElementById('phone-screen');
+            html2canvas(screen, { scale: 3 }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'EHB_Success_Proof.png';
-                link.href = canvas.toDataURL("image/png");
+                link.href = canvas.toDataURL();
                 link.click();
             });
         }
