@@ -3,31 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EHB | Secure Result System v2.0</title>
+    <title>EHB | Imposter Result v12.0 (Dynamic)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Hind+Siliguri:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #00ffcc; --bg: #05070a; --card: #12151c; }
-        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+        :root { --accent: #00ffcc; --bg: #05070a; --card: #12151c; --font-bn: 'Hind Siliguri', sans-serif; --font-en: 'Orbitron', sans-serif; }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: var(--font-bn); padding: 20px; }
         
-        /* 🛠️ Admin Control Panel */
-        .admin-box { background: var(--card); border: 1px solid #333; padding: 25px; border-radius: 20px; max-width: 480px; margin: 0 auto 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h3 { color: var(--accent); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        /* 🛠️ Admin Panel Control UI */
+        .admin-box { background: var(--card); border: 1px solid #333; padding: 25px; border-radius: 20px; max-width: 480px; margin: 0 auto 30px; }
         input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: var(--accent); border-radius: 10px; box-sizing: border-box; outline: none; }
+        .gen-btn { width: 100%; padding: 16px; background: var(--accent); color: #000; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 15px; text-transform: uppercase; }
+
+        /* 📸 Dynamic Mobile Frame (Based on 56351.png & RealMe C71) */
+        #capture-frame { width: 360px; background: #fff; color: #000; margin: 0 auto; text-align: left; font-family: sans-serif; position: relative; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; }
         
-        /* 🖼️ Precise Facebook Proof Frame (Based on 56351.png) */
-        #capture-frame { width: 360px; background: #fff; color: #000; padding: 25px; margin: 0 auto; text-align: left; font-family: Helvetica, Arial, sans-serif; position: relative; border: 1px solid #ddd; }
-        .mail-header { border-bottom: 1px solid #e5e5e5; padding-bottom: 15px; margin-bottom: 20px; }
-        .mail-header h2 { font-size: 19px; margin: 0; color: #1c1e21; font-weight: 700; }
+        /* 🔋 Dynamic Battery Status Bar */
+        .status-bar { height: 24px; background: #eee; color: #666; display: flex; align-items: center; justify-content: space-between; padding: 0 10px; font-size: 10px; font-weight: bold; font-family: var(--font-en); }
+        .status-bar .icons { display: flex; align-items: center; gap: 5px; }
+
+        /* 🖼️ Facebook Success Frame (56351.png) */
+        .mail-content { padding: 25px; }
+        .mail-header { border-bottom: 1px solid #e5e5e5; padding-bottom: 15px; margin-bottom: 20px; position: relative; }
+        .mail-header h2 { font-size: 19px; margin: 0; color: #1c1e21; font-weight: 800; }
         .mail-meta { font-size: 11px; color: #606770; margin-top: 8px; line-height: 1.4; }
         
+        /* Editable Timestamp */
+        .timestamp { position: absolute; right: 0; bottom: 15px; text-align: right; }
+        .timestamp h3 { font-size: 15px; margin: 0; color: #000; }
+        .timestamp span { font-size: 10px; color: #606770; }
+
         .mail-body { font-size: 14px; line-height: 1.5; color: #1c1e21; }
         .mail-body p { margin-bottom: 15px; }
         .mail-body b { color: #000; font-weight: 700; }
-        .blue-link { color: #1877f2; text-decoration: none; word-break: break-all; font-size: 13px; }
-        
-        .gen-btn { width: 100%; padding: 16px; background: var(--accent); color: #000; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 20px; text-transform: uppercase; transition: 0.3s; }
-        .gen-btn:active { transform: scale(0.98); }
 
         #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
     </style>
@@ -36,59 +45,97 @@
 
     <div id="lock-screen">
         <div class="admin-box">
-            <i class="fas fa-user-shield" style="font-size: 40px; color: var(--accent); margin-bottom: 15px;"></i>
-            <h3>CEO LOGIN</h3>
-            <input type="password" id="pass" placeholder="Enter Access Key">
-            <button class="gen-btn" onclick="verify()">UNLOCK SYSTEM</button>
+            <h3 style="color:var(--accent); text-transform:uppercase;">EHB DYNAMIC SYSTEM</h3>
+            <input type="password" id="ceo-pass" placeholder="পাসওয়ার্ড দিন">
+            <button class="gen-btn" onclick="verify()">OPEN VAULT</button>
         </div>
     </div>
 
-    <div id="main-system" style="display:none;">
+    <div id="vault-system" style="display:none;">
         <div class="admin-box">
-            <h3>Screenshot Config</h3>
-            <input type="text" id="target-mail" placeholder="Recipient Email (nastikghawk63...)" oninput="sync()">
-            <input type="text" id="target-name" placeholder="Target Profile Name" oninput="sync()">
-            <button class="gen-btn" onclick="download()"><i class="fas fa-download"></i> SAVE PROOF IMAGE</button>
+            <h3>SCREENSHOT CONFIG</h3>
+            <input type="text" id="target-mail" placeholder="Recipient Email (recipient@haren.uk)" oninput="updateUI()">
+            <input type="text" id="target-name" placeholder="Target Name (User)" oninput="updateUI()">
+            <input type="text" id="target-time" placeholder="Time (07:21)" oninput="updateUI()">
+            <input type="text" id="target-ago" placeholder="X Second Ago (3 Second Ago)" oninput="updateUI()">
+            <button class="gen-btn" onclick="capture()"><i class="fas fa-camera"></i> CAPTURE & SAVE</button>
         </div>
 
         <div id="capture-frame">
-            <div class="mail-header">
-                <h2>Thank you for submitting your ID</h2>
-                <div class="mail-meta">
-                    To: <span id="view-mail">nastikghawk63@haren.uk</span><br>
-                    From: Facebook &lt;noreply@support.facebook.com&gt;
-                </div>
-            </div>
             
-            <div class="mail-body">
-                <p>Hi <span id="view-name">User</span>,</p>
-                <p>Thanks for letting us know about the profile you reported for pretending to be someone they're not.</p>
-                <p><b>We removed the profile</b> since it goes against the Facebook Community Standards. We let them know that the profile has been removed, but not that you reported it.</p>
-                <p>For more information about our policies, please read the Facebook Community Standards: <br>
-                <a href="#" class="blue-link">https://www.facebook.com/communitystandards?ref=cr</a></p>
-                <p><b>Thanks,<br>The Facebook Team</b></p>
+            <div class="status-bar">
+                <span><i class="fas fa-signal"></i> LTE</span>
+                <div class="icons">
+                    <span><i class="fas fa-network-wired"></i> <i class="fas fa-volume-mute"></i></span>
+                    <span id="ui-battery">57% <i class="fas fa-battery-half"></i></span> </div>
+            </div>
+
+            <div class="mail-content">
+                <div class="mail-header">
+                    <h2>Thank you for submitting your ID</h2>
+                    <div class="mail-meta">
+                        To: <span id="ui-mail" contenteditable="true">recipient@haren.uk</span><br>
+                        From: Facebook &lt;noreply@support.facebook.com&gt;
+                    </div>
+                    <div class="timestamp">
+                        <h3 id="ui-time" contenteditable="true">07:21</h3>
+                        <span id="ui-ago" contenteditable="true">(3 Second Ago)</span>
+                    </div>
+                </div>
+                
+                <div class="mail-body">
+                    <p>Hi <b id="ui-name" contenteditable="true">User</b>,</p>
+                    <p>Thanks for letting us know about the profile you reported for pretending to be someone they're not.</p>
+                    <p><b>We removed the profile</b> since it goes against the Facebook Community Standards. We let them know that the profile has been removed, but not that you reported it.</p>
+                    <p><b>Thanks,<br>The Facebook Team</b></p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // master password from user summary
         function verify() {
-            if(document.getElementById('pass').value === "asif2008") {
+            if(document.getElementById('ceo-pass').value === "asif2008") {
                 document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('main-system').style.display = 'block';
-            } else { alert("ACCESS DENIED!"); }
+                document.getElementById('vault-system').style.display = 'block';
+                updateBattery(); // Initialize dynamic battery
+            } else { alert("WRONG PASSWORD!"); }
         }
 
-        function sync() {
-            document.getElementById('view-mail').innerText = document.getElementById('target-mail').value || "recipient@mail.com";
-            document.getElementById('view-name').innerText = document.getElementById('target-name').value || "User";
+        // 🔋 Dynamic Battery Sync (RealMe C71 Style)
+        function updateBattery() {
+            navigator.getBattery().then(function(battery) {
+                function updateUI() {
+                    let level = Math.round(battery.level * 100);
+                    let icon = level > 80 ? "fa-battery-full" : (level > 40 ? "fa-battery-half" : "fa-battery-quarter");
+                    
+                    document.getElementById('ui-battery').innerHTML = level + "% <i class='fas " + icon + "'></i>";
+                    
+                    if (battery.charging) {
+                        document.getElementById('ui-battery').innerHTML += " <i class='fas fa-bolt'></i>";
+                    }
+                }
+                
+                updateUI();
+                battery.addEventListener('levelchange', updateUI);
+                battery.addEventListener('chargingchange', updateUI);
+            });
         }
 
-        function download() {
+        function updateUI() {
+            // Live sync from admin panel inputs
+            document.getElementById('ui-mail').innerText = document.getElementById('target-mail').value || "recipient@mail.com";
+            document.getElementById('ui-name').innerText = document.getElementById('target-name').value || "User";
+            document.getElementById('ui-time').innerText = document.getElementById('target-time').value || "07:21";
+            document.getElementById('ui-ago').innerText = "(" + (document.getElementById('target-ago').value || "3 Second Ago") + ")";
+        }
+
+        function capture() {
             const frame = document.getElementById('capture-frame');
-            html2canvas(frame, { scale: 3 }).then(canvas => {
+            html2canvas(frame, { scale: 3, useCORS: true }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'EHB_Success_Result.png';
+                link.download = 'EHB_Success_Proof.png';
                 link.href = canvas.toDataURL("image/png");
                 link.click();
             });
