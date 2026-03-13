@@ -3,131 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EHB | Recruitment Live Editor</title>
+    <title>ASIF SHOP | Secure Management Vault v6.5</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Hind+Siliguri:wght@300;500;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     <style>
         :root { --accent: #00ffcc; --bg: #05070a; --card: #12151c; --text: #d1d5db; --font-bn: 'Hind Siliguri', sans-serif; --font-en: 'Orbitron', sans-serif; }
-        body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-bn); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-bn); padding-bottom: 120px; }
         
-        /* 🛠️ Admin Panel (Based on image_25.png) */
-        .admin-panel { background: var(--card); border: 2px solid #2d333b; border-radius: 20px; width: 100%; max-width: 480px; padding: 25px; box-sizing: border-box; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .admin-panel h3 { font-family: var(--font-en); color: var(--accent); margin-top: 0; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        .input-group label { display: block; font-size: 12px; margin-bottom: 5px; color: var(--accent); font-weight: 700; }
-        .input-group input { width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: var(--accent); border-radius: 10px; box-sizing: border-box; outline: none; border-left: 3px solid transparent; }
-        .input-group input:focus { border-left-color: var(--accent); }
-        
-        /* 💾 SAVE PROOF IMAGE Button */
-        .save-btn { width: 100%; padding: 16px; background: var(--accent); color: #000; border: none; border-radius: 12px; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 5px 15px rgba(0,255,204,0.2); transition: 0.3s; }
-        .save-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,255,204,0.3); }
+        /* 📢 Glowing ASIF SHOP Header */
+        header { text-align: center; padding: 60px 20px; background: radial-gradient(circle at top, #002b24 0%, var(--bg) 90%); border-bottom: 1px solid #1f2937; }
+        header h1 { font-family: var(--font-en); color: var(--accent); font-size: 32px; margin: 0; text-transform: uppercase; letter-spacing: 5px; text-shadow: 0 0 20px var(--accent); }
+        header p { font-size: 13px; opacity: 0.7; margin-top: 10px; letter-spacing: 1px; }
 
-        /* 📸 Live Edit Panel (Mobile Screen Simulation) */
-        #phone-screen { width: 360px; background: #fff; color: #000; margin: 0 auto; text-align: left; font-family: system-ui, -apple-system, sans-serif; position: relative; border: 10px solid #1a1a1a; border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
-        
-        /* 🔋 Status Bar */
-        .status-bar { height: 24px; background: #eee; color: #666; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; font-size: 10px; font-weight: bold; }
-        .status-bar .icons { display: flex; align-items: center; gap: 5px; }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .section-title { font-weight: 700; margin: 35px 0 15px; padding-left: 5px; font-size: 16px; color: var(--accent); text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
 
-        /* 🖼️ Email Content Area (56351.png) */
-        .email-container { padding: 25px; }
-        .email-header { border-bottom: 1px solid #e5e5e5; padding-bottom: 15px; margin-bottom: 20px; }
-        .email-header h2 { font-size: 19px; margin: 0; color: #1c1e21; font-weight: 800; }
-        .mail-meta { font-size: 11px; color: #606770; margin-top: 8px; line-height: 1.4; }
-        
-        .email-body { font-size: 14px; line-height: 1.5; color: #1c1e21; }
-        .email-body p { margin-bottom: 15px; }
-        .email-body b { color: #000; font-weight: 700; }
-        
-        /* 🖊️ ContentEditable Styling */
-        [contenteditable="true"] { border-radius: 4px; padding: 2px 4px; border: 1px solid transparent; transition: 0.2s; }
-        [contenteditable="true"]:hover { background: rgba(0,255,204,0.05); border-color: #ddd; }
-        [contenteditable="true"]:focus { background: rgba(0,255,204,0.1); border-color: var(--accent); outline: none; }
+        /* 💠 Quick Service Grid */
+        .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 25px 0; }
+        .service-card { background: var(--card); border: 1px solid #30363d; border-radius: 15px; padding: 20px 5px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .service-card:active { transform: scale(0.95); background: #1c2128; border-color: var(--accent); }
+        .service-card i { font-size: 28px; margin-bottom: 10px; display: block; }
+        .service-card b { font-size: 10px; color: #fff; display: block; text-transform: uppercase; line-height: 1.3; }
 
-        /* CEO master lock from user summary */
-        #lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        /* 📊 Rate List Style */
+        .rate-row { background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; border: 1px solid #2d333b; }
+        .rate-row i { font-size: 22px; color: var(--accent); width: 30px; text-align: center; }
+        .rate-info b { display: block; font-size: 15px; color: #fff; margin-bottom: 2px; }
+        .rate-info span { font-size: 13px; color: var(--accent); font-weight: 800; }
+        .order-btn { margin-left: auto; background: var(--accent); color: #000; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 800; font-size: 11px; cursor: pointer; }
+
+        /* 📞 Contact Support */
+        .contact-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .contact-btn { background: #fff; color: #000; padding: 12px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        /* 🛠️ Protected CEO Admin Panel */
+        #admin-panel { display: none !important; /* CSS দিয়ে ডিফল্ট অফ রাখা হয়েছে */ background: #080808; border-top: 3px solid var(--accent); padding: 20px; position: fixed; bottom: 0; left: 0; width: 100%; box-sizing: border-box; z-index: 2000; border-radius: 25px 25px 0 0; max-height: 85vh; overflow-y: auto; }
+        .admin-input { width: 100%; padding: 12px; margin-bottom: 10px; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 13px; box-sizing: border-box; }
+        .admin-btn { width: 100%; padding: 14px; background: var(--accent); color: #000; border: none; border-radius: 10px; font-weight: 800; margin-bottom: 10px; cursor: pointer; text-transform: uppercase; font-size: 13px; }
+        
+        .price-edit-row { display: flex; justify-content: space-between; align-items: center; background: #111; padding: 8px 12px; margin-bottom: 5px; border-radius: 6px; font-size: 12px; }
+        .price-edit-row input { width: 90px; background: #000; border: 1px solid #444; color: var(--accent); text-align: center; padding: 5px; border-radius: 4px; }
+
+        .admin-trigger { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent); color: #000; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.6); }
+
+        footer { text-align: center; padding: 40px 20px; font-size: 11px; opacity: 0.5; border-top: 1px solid #1f2937; margin-top: 40px; line-height: 1.8; }
     </style>
 </head>
 <body>
 
-    <div id="lock-screen">
-        <div class="admin-panel">
-            <h3>CEO ACCESS ONLY</h3>
-            <input type="password" id="ceo-pass" placeholder="পাসওয়ার্ড দিন">
-            <button class="save-btn" onclick="unlock()"><i class="fas fa-key"></i> UNLOCK SYSTEM</button>
+    <header>
+        <h1>ASIF SHOP</h1>
+        <p>Cyber Security & Media Recovery Hub</p>
+    </header>
+
+    <div class="container">
+        <div class="section-title"><i class="fas fa-bolt"></i> দ্রুত সেবা নির্বাচন করুন</div>
+        <div class="service-grid">
+            <div class="service-card" onclick="order('Facebook Recovery')"><i class="fab fa-facebook" style="color:#1877f2;"></i><b>Facebook<br>Recovery</b></div>
+            <div class="service-card" onclick="order('Gmail Recovery')"><i class="fab fa-google" style="color:#ea4335;"></i><b>Gmail<br>Recovery</b></div>
+            <div class="service-card" onclick="order('WhatsApp Recovery')"><i class="fab fa-whatsapp" style="color:#25d366;"></i><b>WhatsApp<br>Recovery</b></div>
+        </div>
+
+        <div id="full-list"></div>
+
+        <div class="section-title"><i class="fas fa-headset"></i> সরাসরি যোগাযোগ</div>
+        <div class="contact-box">
+            <a href="https://wa.me/8801816731602" class="contact-btn" style="background:#25d366; color:#fff;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://www.facebook.com/share/1auxodR9MK/" class="contact-btn" style="background:#1877f2; color:#fff;"><i class="fab fa-facebook"></i> Facebook</a>
+            <a href="https://m.me/186189464570441" class="contact-btn" style="background:#0084ff; color:#fff;"><i class="fab fa-messenger"></i> Messenger</a>
+            <a href="mailto:ethicalhacker.bd.official@gmail.com" class="contact-btn" style="background:#ea4335; color:#fff;"><i class="fas fa-envelope"></i> Email</a>
         </div>
     </div>
 
-    <div id="main-editor" style="display:none;">
+    <div id="admin-panel" style="display: none !important;">
+        <h3 style="color:var(--accent); text-align:center; margin-bottom:15px; font-family:var(--font-en);">CEO MASTER ADMIN</h3>
         
-        <div class="admin-panel">
-            <h3>LIVE EDITOR CONFIG</h3>
-            <div class="input-group">
-                <label>টার্গেট প্রোফাইল নাম (Hi User)</label>
-                <input type="text" id="target-name" placeholder="Ex: Rifat Chowdhury" oninput="syncName()">
-            </div>
-            <button class="save-btn" onclick="saveScreenshot()"><i class="fas fa-camera"></i> SAVE PROOF IMAGE</button>
+        <div style="border-bottom: 1px solid #222; padding-bottom: 15px; margin-bottom: 15px;">
+            <p style="font-size: 11px; color: #888;">নতুন সার্ভিস যোগ করুন:</p>
+            <input type="text" id="new-cat-name" class="admin-input" placeholder="ক্যাটাগরি (Ex: Facebook Rate)">
+            <input type="text" id="new-service-name" class="admin-input" placeholder="সার্ভিসের নাম">
+            <input type="text" id="new-service-price" class="admin-input" placeholder="দাম">
+            <button class="admin-btn" onclick="addNewService()">সার্ভিস যোগ করুন</button>
         </div>
 
-        <div id="phone-screen">
-            
-            <div class="status-bar">
-                <span>07:21</span>
-                <div class="icons">
-                    <span><i class="fas fa-signal"></i> LTE</span>
-                    <span><i class="fas fa-wifi"></i></span>
-                    <span>28% <i class="fas fa-battery-quarter"></i></span> </div>
-            </div>
+        <div id="price-editor-list"></div>
 
-            <div class="email-container">
-                <div class="email-header">
-                    <h2>Thank you for submitting your ID</h2>
-                    <div class="mail-meta">
-                        To: nastikghawk63@haren.uk<br>
-                        From: Facebook &lt;noreply@support.facebook.com&gt;
-                    </div>
-                </div>
-                
-                <div class="email-body">
-                    <p>Hi <b id="hi-name" contenteditable="true">User</b>,</p>
-                    <p contenteditable="true">Thanks for letting us know about the profile you reported for pretending to be someone they're not.</p>
-                    <p><b>We removed the profile</b> <span contenteditable="true">since it goes against the Facebook Community Standards.</span></p>
-                    <p contenteditable="true">For more information about our policies, please read the Facebook Community Standards: <br>
-                    <a href="https://www.facebook.com/communitystandards?ref=cr" style="color: #1877f2; text-decoration: none;">https://www.facebook.com/communitystandards?ref=cr</a></p>
-                    <p><b>Thanks,<br>The Facebook Team</b></p>
-                </div>
-            </div>
-        </div>
+        <button class="admin-btn" style="background:#007bff; color:#fff; margin-top: 20px;" onclick="copyUpdatedScript()">কোড কপি করুন (Auto-Lock Mode)</button>
+        <button class="admin-btn" style="background:none; border:1px solid #444; color:#666;" onclick="toggleAdmin()">প্যানেল বন্ধ করুন</button>
     </div>
 
-    <script>
-        // CEO password function from user summary
-        function unlock() {
-            if(document.getElementById('ceo-pass').value === "asif2008") {
-                document.getElementById('lock-screen').style.display = 'none';
-                document.getElementById('main-editor').style.display = 'block';
-            } else { alert("ACCESS DENIED!"); }
+    <div class="admin-trigger" onclick="toggleAdmin()"><i class="fas fa-user-shield"></i></div>
+
+    <footer>
+        <i class="fas fa-shield-halved"></i> WE DO NOT ASK FOR ADMIN DEALS.<br>
+        &copy; 2026 ASIF SHOP | Powered by Asif Chowdhury.
+    </footer>
+
+    <script id="data-script">
+        let serviceGroups = [
+            { cat: "✈️ Telegram Rate", items: [
+                { icon: "fab fa-telegram", name: "Scam Removal", price: "17,000/-" },
+                { icon: "fas fa-robot", name: "Custom Bot", price: "3,000/-" },
+                { icon: "fas fa-code", name: "API Setup", price: "2,500/-" }
+            ]},
+            { cat: "🔸 Instagram Rate", items: [
+                { icon: "fab fa-instagram", name: "Permanent Remove", price: "37,000/-" },
+                { icon: "fas fa-user-slash", name: "Suspended", price: "1,400/-" },
+                { icon: "fas fa-check-circle", name: "Meta Verify", price: "1,000/-" }
+            ]},
+            { cat: "🔹 Facebook Rate", items: [
+                { icon: "fab fa-facebook", name: "Locked Recovery", price: "1,500/-" },
+                { icon: "fas fa-user-lock", name: "Hacked Recovery", price: "18,000/-" },
+                { icon: "fas fa-user-tag", name: "Imposter (DOB)", price: "500/-" },
+                { icon: "fas fa-user-secret", name: "Imposter (Without)", price: "900/-" },
+                { icon: "fas fa-shield-check", name: "Meta Verify", price: "700/-" }
+            ]},
+            { cat: "📧 Gmail & Server", items: [
+                { icon: "fab fa-google", name: "Disabled Fix", price: "2,000/-" },
+                { icon: "fas fa-key", name: "2FA Bypass", price: "2,500/-" },
+                { icon: "fas fa-server", name: "Server Fix", price: "3,000/-" }
+            ]},
+            { cat: "⚖️ Updates & Methods", items: [
+                { icon: "fas fa-copyright", name: "Copyright Update", price: "600/-" },
+                { icon: "fas fa-ban", name: "Telegram Banning", price: "3,200/-" },
+                { icon: "fab fa-whatsapp", name: "WhatsApp Banning", price: "5,700/-" },
+                { icon: "fas fa-file-pdf", name: "Instagram Banning PDF", price: "800/-" }
+            ]},
+            { cat: "📂 Imposter Files", items: [
+                { icon: "fas fa-file-invoice", name: "Dob File", price: "1,000/-" },
+                { icon: "fas fa-file-excel", name: "Without Dob", price: "1,500/-" }
+            ]},
+            { cat: "🤖 Bot Reports", items: [
+                { icon: "fas fa-robot", name: "Telegram (3L)", price: "3 Lakhs" },
+                { icon: "fas fa-robot", name: "Instagram (7L)", price: "7 Lakhs" },
+                { icon: "fas fa-users-gear", name: "FB Bot (1.3M)", price: "1.3 Million" }
+            ]},
+            { cat: "🚀 Update Sell", items: [
+                { icon: "fas fa-globe-asia", name: "Griverence Facebook", price: "1,500/-" },
+                { icon: "fas fa-globe-americas", name: "Griverence Instagram", price: "1,500/-" },
+                { icon: "fas fa-bolt", name: "Any Update", price: "2,000/-" }
+            ]}
+        ];
+
+        function renderSite() {
+            const container = document.getElementById('full-list');
+            container.innerHTML = serviceGroups.map(group => `
+                <div class="section-title">${group.cat}</div>
+                ${group.items.map(item => `
+                    <div class="rate-row">
+                        <i class="${item.icon}"></i>
+                        <div class="rate-info"><b>${item.name}</b><span>${item.price}</span></div>
+                        <button class="order-btn" onclick="order('${item.name}')">অর্ডার</button>
+                    </div>
+                `).join('')}
+            `).join('');
         }
 
-        // Live sync name input to email body
-        function syncName() {
-            let inputName = document.getElementById('target-name').value;
-            document.getElementById('hi-name').innerText = inputName || "User";
+        function toggleAdmin() {
+            const p = document.getElementById('admin-panel');
+            if (p.style.getPropertyValue("display") === "none" || p.style.display === "none") {
+                if(prompt("CEO পাসওয়ার্ড:") === "asif2008") {
+                    p.style.setProperty("display", "block", "important");
+                    loadPriceEditor();
+                }
+            } else {
+                p.style.setProperty("display", "none", "important");
+            }
         }
 
-        // Save screenshot function
-        function saveScreenshot() {
-            const screen = document.getElementById('phone-screen');
-            html2canvas(screen, { scale: 3 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'EHB_Success_Proof.png';
-                link.href = canvas.toDataURL();
-                link.click();
+        function addNewService() {
+            const cat = document.getElementById('new-cat-name').value;
+            const name = document.getElementById('new-service-name').value;
+            const price = document.getElementById('new-service-price').value;
+            if(!cat || !name || !price) return;
+            const iconMap = (c) => c.includes('Facebook') ? 'fab fa-facebook' : c.includes('Instagram') ? 'fab fa-instagram' : c.includes('Telegram') ? 'fab fa-telegram' : c.includes('Gmail') ? 'fab fa-google' : 'fas fa-shield-halved';
+            let gIdx = serviceGroups.findIndex(g => g.cat === cat);
+            const newItem = { icon: iconMap(cat), name, price };
+            if(gIdx !== -1) serviceGroups[gIdx].items.push(newItem);
+            else serviceGroups.push({ cat, items: [newItem] });
+            renderSite(); loadPriceEditor();
+            alert("সার্ভিস যোগ হয়েছে! কপি বাটন দিয়ে আপডেট কোড নিন।");
+        }
+
+        function loadPriceEditor() {
+            const editorList = document.getElementById('price-editor-list');
+            let html = '<p style="font-size:11px; color:#666; margin-bottom:10px;">দাম পরিবর্তন করুন:</p>';
+            serviceGroups.forEach((group, gIdx) => {
+                group.items.forEach((item, iIdx) => {
+                    html += `<div class="price-edit-row"><span>${item.name}</span><input type="text" value="${item.price}" onchange="updatePrice(${gIdx}, ${iIdx}, this.value)"></div>`;
+                });
             });
+            editorList.innerHTML = html;
         }
+
+        function updatePrice(gIdx, iIdx, newVal) { serviceGroups[gIdx].items[iIdx].price = newVal; renderSite(); }
+
+        // 🔒 Improved Security: কোড কপি করার আগে প্যানেল অটো লক করবে
+        function copyUpdatedScript() {
+            const p = document.getElementById('admin-panel');
+            p.style.setProperty("display", "none", "important"); // প্যানেল বন্ধ করে কোড কপি করা হচ্ছে
+            
+            setTimeout(() => {
+                let fullHTML = document.documentElement.outerHTML;
+                const dataToInject = `let serviceGroups = ${JSON.stringify(serviceGroups)};`;
+                const updatedHTML = fullHTML.replace(/let serviceGroups = \[[\s\S]*?\];/, dataToInject);
+
+                const textArea = document.createElement("textarea");
+                textArea.value = updatedHTML; document.body.appendChild(textArea);
+                textArea.select(); document.execCommand("copy");
+                document.body.removeChild(textArea);
+                alert("সিকিউর কোড কপি হয়েছে! টার্মিনাক্সে পেস্ট করুন। প্যানেলটি অটো লক করা হয়েছে।");
+            }, 100);
+        }
+
+        function order(service) {
+            const msg = `আসসালামু আলাইকুম আসিফ ভাই,\nআমি আপনার ASIF SHOP থেকে "${service}" সার্ভিসটি নিতে চাই।`;
+            window.open(`https://wa.me/8801816731602?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+        renderSite();
     </script>
 </body>
 </html>
